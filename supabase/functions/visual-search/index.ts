@@ -91,9 +91,9 @@ serve(async (req) => {
   }
 
   try {
-    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
-    if (!GEMINI_API_KEY) {
-      throw new Error('GEMINI_API_KEY not configured');
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('LOVABLE_API_KEY not configured');
     }
 
     const formData = await req.formData();
@@ -121,24 +121,28 @@ serve(async (req) => {
       throw new Error('No image provided');
     }
 
-    // Use Gemini Vision API to analyze the image
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`,
+    // Use Lovable AI with Gemini 2.5 Flash for vision analysis
+    const aiResponse = await fetch(
+      'https://ai.gateway.lovable.dev/v1/chat/completions',
       {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [
+          model: 'google/gemini-2.5-flash',
+          messages: [{
+            role: 'user',
+            content: [
               {
+                type: 'text',
                 text: "Describe this product image in detail. Focus on: 1) Product category (electronics, fashion, home, sports, books, beauty), 2) Visual features (colors, shapes, style), 3) Key identifying characteristics. Be specific and detailed."
               },
               {
-                inline_data: {
-                  mime_type: "image/jpeg",
-                  data: imageBase64
+                type: 'image_url',
+                image_url: {
+                  url: `data:image/jpeg;base64,${imageBase64}`
                 }
               }
             ]
@@ -147,14 +151,14 @@ serve(async (req) => {
       }
     );
 
-    if (!geminiResponse.ok) {
-      const errorText = await geminiResponse.text();
-      console.error('Gemini API error:', errorText);
-      throw new Error('Failed to analyze image with Gemini');
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      console.error('Lovable AI error:', errorText);
+      throw new Error('Failed to analyze image with AI');
     }
 
-    const geminiData = await geminiResponse.json();
-    const imageDescription = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const aiData = await aiResponse.json();
+    const imageDescription = aiData.choices?.[0]?.message?.content || '';
 
     console.log('Image description:', imageDescription);
 
