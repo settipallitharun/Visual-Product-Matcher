@@ -1,62 +1,87 @@
-# Welcome to your Lovable project
+# Visual Product Matcher
 
-## Project info
+An AI-powered visual product matching application that helps users find similar products by uploading images. Built with React, TypeScript, and Supabase.
 
-**URL**: https://lovable.dev/projects/e6bb95b0-66e2-4dc4-9bb5-5ccc2e410fd5
+## Features
 
-## How can I edit this code?
+- 🖼️ Image upload and processing
+- 🔍 Visual similarity search
+- 🎯 AI-powered product matching
+- 📱 Responsive design
+- ⚡ Real-time search results
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e6bb95b0-66e2-4dc4-9bb5-5ccc2e410fd5) and start prompting.
+- Node.js (v18 or higher)
+- npm or yarn
+- Supabase account
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone the repository
+git clone https://github.com/settipallitharun/Visual-Product-Matcher.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to the project directory
+cd Visual-Product-Matcher
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Copy environment variables
+cp .env.example .env
+
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Environment Setup
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Create a `.env` file with your Supabase credentials:
 
-**Use GitHub Codespaces**
+```env
+VITE_SUPABASE_PROJECT_ID=your_project_id
+VITE_SUPABASE_PUBLISHABLE_KEY=your_publishable_key
+VITE_SUPABASE_URL=your_supabase_url
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Tech Stack
 
-## What technologies are used for this project?
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Components**: shadcn/ui, Tailwind CSS
+- **Backend**: Supabase (Database, Authentication, Edge Functions)
+- **AI/ML**: Google Gemini 2.5 Flash for visual analysis
+- **Deployment**: Vercel/Netlify compatible
 
-This project is built with:
+## Project Structure
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   ├── ImageUploader.tsx
+│   ├── ProductGrid.tsx
+│   └── SimilaritySlider.tsx
+├── integrations/       # External service integrations
+│   └── supabase/      # Supabase client and types
+├── pages/             # Application pages
+├── hooks/             # Custom React hooks
+└── lib/               # Utility functions
+```
 
+## Usage
+
+1. Upload an image of a product
+2. Adjust similarity threshold using the slider
+3. View matching products in the grid
+4. Click on products for more details
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
